@@ -1,34 +1,27 @@
 'use client';
 
-import Head from 'next/head';
+import dynamic from 'next/dynamic';
 import * as React from 'react';
 import '@/lib/env';
 
-import ArrowLink from '@/components/links/ArrowLink';
-import ButtonLink from '@/components/links/ButtonLink';
-import UnderlineLink from '@/components/links/UnderlineLink';
-import UnstyledLink from '@/components/links/UnstyledLink';
+const CanvasArea = dynamic(() => import('@/components/CanvasArea'), {
+  ssr: false,
+});
 
-/**
- * SVGR Support
- * Caveat: No React Props Type.
- *
- * You can override the next-env if the type is important to you
- * @see https://stackoverflow.com/questions/68103844/how-to-override-next-js-svg-module-declaration
- */
-import Logo from '~/svg/Logo.svg';
-
-// !STARTERCONF -> Select !STARTERCONF and CMD + SHIFT + F
-// Before you begin editing, follow all comments with `STARTERCONF`,
-// to customize the default configuration.
+import Toolbar from '@/components/Toolbar';
 
 export default function HomePage() {
   return (
-    <main>
-      <Head>
-        <title>Hi</title>
-      </Head>
+    <main className="relative w-screen h-screen overflow-auto bg-neutral-100">
+      {/* Giant scrollable canvas area */}
+      <div className="w-[5000px] h-[5000px] relative">
+        <CanvasArea />
+      </div>
 
+      {/* Fixed toolbar at the bottom center */}
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+        <Toolbar />
+      </div>
     </main>
   );
 }
